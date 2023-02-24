@@ -1,7 +1,7 @@
 import cv2
 import mediapipe as mp
 import time
-
+import numpy as np
 
 class handDetector():
     def __init__(self, mode=False, maxHands = 2, complexity = 1, detectionConf=0.5, trackConf=0.5):  #Complexity param added!!!
@@ -25,11 +25,6 @@ class handDetector():
                     self.mpDraw.draw_landmarks(img, handLms,
                                       self.mpHands.HAND_CONNECTIONS)  # draw dots on the joints(handLms), and hand connections mpHands.HAND_CONNECTIONS
 
-
-
-
-        cv2.imshow("Image", img)
-        cv2.waitKey(1)
         return img
 
     def findPosition(self, img, handNo=0, draw = True): #position for a specific hand
@@ -46,18 +41,20 @@ class handDetector():
         return lmList
 
 
+
 def main():
     prevTime = 0
     ctTime = 0
     cap = cv2.VideoCapture(0)
     detector = handDetector()
-
+    joint_list = [[8,7,6], [12,11,10], [16,15,14], [20,19,18]]
     while True:
         success, img = cap.read()
         img = detector.findHands(img)
         lmList = detector.findPosition(img)
         if len(lmList) != 0:
                print(lmList)
+        angle = detector.findAngles()
 
 
         # configure thee fps
