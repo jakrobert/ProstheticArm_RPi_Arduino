@@ -47,9 +47,10 @@ def findDistance(landMarkList, a, b):
         x2 = landMarkList[b][1]
         y2 = landMarkList[b][2]
         cx, cy = (x1 + x2) // 2, (y1 + y2) // 2
+        dist = np.sqrt((x2-x1)**2+(y2-y1)**2) ##asta e bun
         length = math.hypot(x2 - x1, y2 - y1)
         info = (x1, y1, x2, y2, cx, cy)
-    return length, info
+    return dist, length, info
 
 
 
